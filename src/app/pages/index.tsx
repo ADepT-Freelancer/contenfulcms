@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "./page.module.css";
 import { GetStaticProps } from "next";
-import { client } from "../../contentful";
+import { client } from "../contentful";
 
 export default function Home({ title, home }: HomePageType) {
   return (
@@ -17,3 +17,17 @@ interface HomePageType {
   title: string;
   home: string;
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const home = await client.getEntries({
+    content_type: "home",
+    limit: 1,
+  });
+
+  return {
+    props: {
+      title: "Мій блог",
+      home,
+    },
+  };
+};
