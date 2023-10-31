@@ -2,7 +2,7 @@ import { GetStaticProps, Metadata } from "next";
 import styles from "./page.module.css";
 import { client } from "../contentful/index";
 import Head from "next/head";
-import { IHomeFields, IHome } from './../contentful.d';
+import { IHomeFields, IHome } from "../contentful";
 
 export default function HomePage({ home }: { home: IHome }) {
   console.log(home);
@@ -11,6 +11,7 @@ export default function HomePage({ home }: { home: IHome }) {
     "description",
     home.fields.description.content[0].content[0].value
   );
+  console.log("fields", home.fields);
   return (
     <>
       <Head>

@@ -45,6 +45,7 @@ function HomePage(_a) {
     console.log(home);
     console.log("Title", home.fields.title);
     console.log("description", home.fields.description.content[0].content[0].value);
+    console.log("fields", home.fields);
     return (React.createElement(React.Fragment, null,
         React.createElement(head_1["default"], null,
             React.createElement("title", null, home.fields.title)),
