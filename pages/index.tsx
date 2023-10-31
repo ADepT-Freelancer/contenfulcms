@@ -2,8 +2,9 @@ import { GetStaticProps, Metadata } from "next";
 import styles from "./page.module.css";
 import { client } from "../contentful/index";
 import Head from "next/head";
+import { IHomeFields, IHome } from './../contentful.d';
 
-export default function HomePage({ home }: HomePageType) {
+export default function HomePage({ home }: { home: IHome }) {
   console.log(home);
   console.log("Title", home.fields.title);
   console.log(
@@ -28,7 +29,7 @@ export default function HomePage({ home }: HomePageType) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const home = await client.getEntries({
+  const home = await client.getEntries<IHomeFields>({
     content_type: "home",
     limit: 15,
   });
@@ -42,21 +43,21 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-interface HomePageType {
-  home: {
-    fields: {
-      description: {
-        content: [
-          {
-            content: [
-              {
-                value: string;
-              }
-            ];
-          }
-        ];
-      };
-      title: string;
-    };
-  };
-}
+// interface HomePageType {
+//   home: {
+//     fields: {
+//       description: {
+//         content: [
+//           {
+//             content: [
+//               {
+//                 value: string;
+//               },
+//             ];
+//           },
+//         ];
+//       };
+//       title: string;
+//     };
+//   };
+// }

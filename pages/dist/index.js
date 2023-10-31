@@ -38,32 +38,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.getStaticProps = void 0;
 var page_module_css_1 = require("./page.module.css");
-var contentful_1 = require("../contentful");
-function Home(_a) {
-    var title = _a.title, home = _a.home;
-    return (React.createElement("main", { className: page_module_css_1["default"].main },
-        "123 ",
-        title,
-        React.createElement("div", { className: page_module_css_1["default"].description }, "1234"),
-        React.createElement("h1", null, title)));
+var index_1 = require("../contentful/index");
+var head_1 = require("next/head");
+function HomePage(_a) {
+    var home = _a.home;
+    console.log(home);
+    console.log("Title", home.fields.title);
+    console.log("description", home.fields.description.content[0].content[0].value);
+    return (React.createElement(React.Fragment, null,
+        React.createElement(head_1["default"], null,
+            React.createElement("title", null, home.fields.title)),
+        React.createElement("main", { className: page_module_css_1["default"].main },
+            "Title: ",
+            home.fields.title,
+            React.createElement("div", { className: page_module_css_1["default"].description },
+                "Description: ",
+                home.fields.description.content[0].content[0].value),
+            React.createElement("h1", null))));
 }
-exports["default"] = Home;
+exports["default"] = HomePage;
 exports.getStaticProps = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var home;
+    var home, homePage;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, contentful_1.client.getEntries({
+            case 0: return [4 /*yield*/, index_1.client.getEntries({
                     content_type: "home",
-                    limit: 1
+                    limit: 15
                 })];
             case 1:
                 home = _a.sent();
+                homePage = home.items[0];
                 return [2 /*return*/, {
                         props: {
-                            title: "Мій блог",
-                            home: home
+                            title: "Apricus IT",
+                            home: homePage
                         }
                     }];
         }
     });
 }); };
+// interface HomePageType {
+//   home: {
+//     fields: {
+//       description: {
+//         content: [
+//           {
+//             content: [
+//               {
+//                 value: string;
+//               },
+//             ];
+//           },
+//         ];
+//       };
+//       title: string;
+//     };
+//   };
+// }
