@@ -12,7 +12,11 @@ export default function Article({ article }: { article: IArticle }) {
         <title>{article.fields.title}</title>
       </Head>
 
-      <Container>
+      <Container
+        style={{
+          minHeight: "100vh",
+        }}
+      >
         <h1 className="py-3">{article.fields.title}</h1>
         <div className="py-2">
           {documentToReactComponents(article.fields.content!)}
@@ -22,10 +26,10 @@ export default function Article({ article }: { article: IArticle }) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const articleEntries = await client.getEntries<IArticleFields>({
+export const getStaticPaths = async () => {
+  const articleEntries = await client.getEntries<IArticleFields | any>({
     content_type: "article",
-    select: "fields.slug",
+    // select: "fields.slug",
   });
 
   console.log("articleEntries", articleEntries);
@@ -45,7 +49,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params!.article!;
 
-  const articleEntries = await client.getEntries<IArticleFields>({
+  const articleEntries = await client.getEntries<IArticleFields | any>({
     content_type: "article",
     limit: 1,
     "fields.slug": slug,

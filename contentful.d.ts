@@ -21,6 +21,13 @@ export interface IArticleFields {
 }
 
 export interface IArticle extends Entry<IArticleFields> {
+  fields: {
+    actions: string;
+    content: document;
+    description: string;
+    slug: string;
+    title: string;
+  };
   sys: {
     id: string;
     type: string;
@@ -49,6 +56,15 @@ export interface IHomeFields {
 }
 
 export interface IHome extends Entry<IHomeFields> {
+  fields: {
+    title: string;
+
+    /** Текст статті */
+    description: Document;
+
+    /** Зображення статті */
+    background: Asset;
+  };
   sys: {
     id: string;
     type: string;
