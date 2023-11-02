@@ -3,6 +3,40 @@
 import { Asset, Entry } from "contentful";
 import { Document } from "@contentful/rich-text-types";
 
+export interface IArticleFields {
+  /** Title */
+  title: string;
+
+  /** slug */
+  slug: string;
+
+  /** Description */
+  description: string;
+
+  /** Content */
+  content?: Document | undefined;
+
+  /** Buttons text */
+  actions?: string | undefined;
+}
+
+export interface IArticle extends Entry<IArticleFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "article";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
 export interface IHomeFields {
   /** Заголовок */
   title?: string | undefined;
@@ -31,9 +65,9 @@ export interface IHome extends Entry<IHomeFields> {
   };
 }
 
-export type CONTENT_TYPE = "home";
+export type CONTENT_TYPE = "article" | "home";
 
-export type IEntry = IHome;
+export type IEntry = IArticle | IHome;
 
 export type LOCALE_CODE = "en-US";
 

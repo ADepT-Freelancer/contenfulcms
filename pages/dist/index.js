@@ -37,29 +37,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.getStaticProps = void 0;
-var page_module_css_1 = require("./page.module.css");
-var index_1 = require("../contentful/index");
+var rich_text_react_renderer_1 = require("@contentful/rich-text-react-renderer");
 var head_1 = require("next/head");
+var reactstrap_1 = require("reactstrap");
+var index_1 = require("../contentful/index");
+var page_module_css_1 = require("./page.module.css");
 function HomePage(_a) {
-    var home = _a.home;
-    console.log(home);
-    console.log("Title", home.fields.title);
-    console.log("description", home.fields.description.content[0].content[0].value);
-    console.log("fields", home.fields);
+    var _b;
+    var home = _a.home, articles = _a.articles;
+    console.log("home", home);
+    console.log("Articles", articles);
     return (React.createElement(React.Fragment, null,
         React.createElement(head_1["default"], null,
             React.createElement("title", null, home.fields.title)),
         React.createElement("main", { className: page_module_css_1["default"].main },
-            "Title: ",
-            home.fields.title,
+            React.createElement("h1", { className: "mt-5" },
+                " Title: ",
+                home.fields.title),
+            React.createElement("div", { className: "text-center p-5 text-white", style: {
+                    background: "url(\"http:" + ((_b = home.fields.background) === null || _b === void 0 ? void 0 : _b.fields.file.url) + "\") no-repeat center / cover ",
+                    paddingLeft: "80%"
+                } }, home.fields.background.fields.title),
             React.createElement("div", { className: page_module_css_1["default"].description },
-                "Description: ",
-                home.fields.description.content[0].content[0].value),
-            React.createElement("h1", null))));
+                React.createElement("div", null,
+                    "Description 1: ",
+                    home.fields.description.content[0].content[0].value),
+                React.createElement("div", null,
+                    "Description 2:",
+                    " ",
+                    home.fields.description.content[0].content[0].value +
+                        home.fields.description.content[0].content[1].value),
+                " ",
+                React.createElement("div", { className: "mb-5" },
+                    "Description 3: ",
+                    rich_text_react_renderer_1.documentToReactComponents(home.fields.description)),
+                " "),
+            React.createElement(reactstrap_1.Container, { className: "pt-5" },
+                React.createElement(reactstrap_1.Row, null, articles.map(function (article) {
+                    return (React.createElement(reactstrap_1.Col, { sm: 4, key: article.fields.slug },
+                        React.createElement(reactstrap_1.Card, { className: "p-3 " },
+                            React.createElement(reactstrap_1.CardTitle, { tag: "h5" }, article.fields.title),
+                            React.createElement(reactstrap_1.CardText, null, article.fields.description),
+                            React.createElement(reactstrap_1.NavLink, { href: "/articles/" + article.fields.slug },
+                                React.createElement(reactstrap_1.Button, null, article.fields.actions)))));
+                }))))));
 }
 exports["default"] = HomePage;
 exports.getStaticProps = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var home, homePage;
+    var home, articleEntries, homePage;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, index_1.client.getEntries({
@@ -68,11 +93,18 @@ exports.getStaticProps = function () { return __awaiter(void 0, void 0, void 0, 
                 })];
             case 1:
                 home = _a.sent();
+                return [4 /*yield*/, index_1.client.getEntries({
+                        content_type: "article",
+                        limit: 15,
+                        select: "fields.title, fields.slug, fields.description, fields.actions, fields.content"
+                    })];
+            case 2:
+                articleEntries = _a.sent();
                 homePage = home.items[0];
                 return [2 /*return*/, {
                         props: {
-                            title: "Apricus IT",
-                            home: homePage
+                            home: homePage,
+                            articles: articleEntries.items
                         }
                     }];
         }

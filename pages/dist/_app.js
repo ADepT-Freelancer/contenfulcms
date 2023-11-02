@@ -11,6 +11,8 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
+require("../globals.css");
+require("bootstrap/dist/css/bootstrap.min.css");
 function App(_a) {
     var Component = _a.Component, pageProps = _a.pageProps;
     return React.createElement(Component, __assign({}, pageProps));
