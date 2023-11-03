@@ -6,7 +6,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { IArticle, IArticleFields, IHome, IHomeFields } from "../contentful";
 import { client } from "../contentful/index";
-import styles from "./page.module.css";
+// import styles from "./page.module.css";
 import { NavLink } from "reactstrap";
 
 const { Meta } = Card;
@@ -36,7 +36,7 @@ export default function HomePage({
         <title>{home.fields.title}</title>
       </Head>
 
-      <main className={styles.main}>
+      <main >
         <h1 className="mt-5"> Title: {home.fields.title}</h1>
         <div>
           <Image
@@ -52,7 +52,7 @@ export default function HomePage({
         <div className="mb-5">
           Description: {documentToReactComponents(home.fields.description)}
         </div>{" "}
-        <div className={styles.articles}>
+        <div >
           {" "}
           <Switch checked={!loading} onChange={onChange} />
           {articles.map((article) => {
